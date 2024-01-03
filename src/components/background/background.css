@@ -16,16 +16,16 @@
     bottom: 0;
     width: 100%;
     background: #000;
-    overflow-x: hidden;
+    overflow: hidden;
     z-index: 0
 }
 
 .background_svg__O_7Lx {
     position: absolute;
     width: 100%;
-    top: 50%;
+    top: 30%;
     opacity: .25;
-    overflow-x: hidden;
+    overflow: hidden;
     animation: background_rotate_grid__1v2si 120s linear infinite forwards
 }
 
