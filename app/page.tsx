@@ -8,7 +8,7 @@ const Page = () => (
         Clayton Curry
       </h1>
       <div className="leading-5 text-base tablet:text-lg laptop:text-xl max-w-[450px]">
-        Developer onboarding, performance, observability. <br />
+        DX, performance, observability. <br />
         Creator of {" "}
         <Link
           target="_blank"
