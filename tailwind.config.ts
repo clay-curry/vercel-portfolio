@@ -20,6 +20,25 @@ const config: Config = {
 
       '4k': '2560px',
     },
-  }
+    extend: {
+      colors: {
+        'blue': '#0000ff', // replace with your preferred blue color
+      },
+      backgroundImage: {
+        'gradient-l': 'linear-gradient(to right, white 50%, blue 50%)',
+      },
+      backgroundSize: {
+        '200%': '200%',
+      },
+    },
+  },
+  variants: {
+    extend: {
+      backgroundImage: ['hover'],
+      backgroundSize: ['hover'],
+      backgroundPosition: ['hover'],
+    },
+  },
+  plugins: [],
 }
 export default config
