@@ -7,14 +7,15 @@ const Page = () => (
       <h1 className="font-bold text-xl tablet:text-2xl laptop:text-3xl">
         Clayton Curry
       </h1>
-      <div className="leading-5 text-base tablet:text-lg laptop:text-xl max-w-[350px]">
-        Pardon the mess. I took a break from my website to build{" "}
+      <div className="leading-5 text-base tablet:text-lg laptop:text-xl max-w-[450px]">
+        Developer onboarding, performance, observability. <br />
+        Creator of {" "}
         <Link
           target="_blank"
           className="text-slate-50 overflow-hidden [background:linear-gradient(to_right,_midnightblue,_royalblue)] bg-clip-text [background-size:200%_100%] [background-position:100%] transition-[background-position_975ms_ease] hover:[background-position:0_100%] font-extrabold"
-          href="https://github.com/clay-curry/oss-scope"
+          href="https://github.com/clay-curry/dep-scope"
         >
-          oss-scope
+          dep-scope
         </Link>
         .
       </div>
