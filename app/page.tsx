@@ -1,5 +1,6 @@
 import Background from "../components/background/background";
 import Link from "next/link";
+import { Typer } from "../components/typer";
 
 const Page = () => (
   <section className="h-[100%] w-[100%]">
@@ -7,17 +8,14 @@ const Page = () => (
       <h1 className="font-bold text-xl tablet:text-2xl laptop:text-3xl">
         Clayton Curry
       </h1>
-      <div className="leading-5 text-base tablet:text-lg laptop:text-xl max-w-[450px]">
-        DX, performance, observability. <br />
-        Creator of {" "}
-        <Link
-          target="_blank"
-          className="text-slate-50 overflow-hidden [background:linear-gradient(to_right,_midnightblue,_royalblue)] bg-clip-text [background-size:200%_100%] [background-position:100%] transition-[background-position_975ms_ease] hover:[background-position:0_100%] font-extrabold"
-          href="https://github.com/clay-curry/dep-scope"
-        >
-          dep-scope
-        </Link>
-        .
+      <div className="leading-1 text-base tablet:text-lg laptop:text-xl max-w-[450px]">
+        <Typer carosel={[
+          "Computer Science grad.",
+          "Open Source Contributer.",
+          "Software Engineer.",
+          "React Developer.",
+          "Database Admin.",
+          ]} />
       </div>
     </div>
     <Background />

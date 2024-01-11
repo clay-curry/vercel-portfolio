@@ -29,13 +29,13 @@
     width: 1000px;
     opacity: .25;
     overflow: hidden;
-    animation: background_rotate_grid__1v2si 120s linear infinite forwards
+    animation: background_rotate_grid__1v2si 180s linear infinite forwards
 }
 
 .background_line__JjhKG {
     stroke-dasharray: 2000;
     stroke-dashoffset: 6000;
-    animation: background_draw_line__MNCqR 15s ease-in-out infinite forwards
+    animation: background_draw_line__MNCqR 20s ease-in-out infinite forwards
 }
 
 .background_line__JjhKG:first-child {
