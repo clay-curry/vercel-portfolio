@@ -69,7 +69,8 @@ function TyperSpan({ carosel }: TyperSpanProps) {
       }, 1500);
     }
     return () => {
-      clearInterval(strokeRef.current);
+      if (strokeRef.current)
+        clearInterval(strokeRef.current);
     };
   }, [isTyping]);
 
