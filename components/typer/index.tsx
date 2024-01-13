@@ -60,10 +60,8 @@ function TyperSpan({ carosel }: TyperSpanProps) {
       clearInterval(strokeRef.current);
     }
     if (isTyping) {
-      console.log("typing");
       strokeRef.current = setInterval(displayString, randomSpeed(55, 60));
     } else {
-      console.log("clearing");
       setTimeout(() => {
       strokeRef.current = setInterval(clearString, randomSpeed(25, 30));
       }, 1500);
