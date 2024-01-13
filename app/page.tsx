@@ -23,7 +23,7 @@ export default function Page() {
       </div>
       
     </div>
-    <div className="socials z-10 m-2 p-2 px-3 flex justify-center absolute gap-3 bg-[#808080]/35 border-2 border-transparent transition delay-75 hover:border-white/20 rounded-3xl bottom-0 right-0">
+    <div className="z-10 m-2 p-2 px-3 flex justify-center absolute gap-3 bg-[#808080]/35 border-2 border-transparent transition delay-75 hover:border-white/20 rounded-3xl bottom-0 right-0">
         <Link
           href="/github"
           prefetch={false}>
