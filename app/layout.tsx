@@ -19,9 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`absolute top-0 bottom-0 left-0 right-0 ${roboto.className}`}>{children}</body>
-      <Analytics />
+      <body className={`absolute top-0 bottom-0 left-0 right-0 ${roboto.className}`}>{children}
       <SpeedInsights />
+      </body>
+      <Analytics />
     </html>
   )
 }
