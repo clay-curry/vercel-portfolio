@@ -61,11 +61,11 @@ function TyperSpan({ carosel }: TyperSpanProps) {
     }
     if (isTyping) {
       console.log("typing");
-      strokeRef.current = setInterval(displayString, randomSpeed(80, 100));
+      strokeRef.current = setInterval(displayString, randomSpeed(55, 60));
     } else {
       console.log("clearing");
       setTimeout(() => {
-      strokeRef.current = setInterval(clearString, randomSpeed(40, 80));
+      strokeRef.current = setInterval(clearString, randomSpeed(25, 30));
       }, 1500);
     }
     return () => {
