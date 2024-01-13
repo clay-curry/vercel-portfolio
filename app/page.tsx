@@ -25,6 +25,7 @@ export default function Page() {
     </div>
     <div className="z-10 m-2 p-2 px-3 flex justify-center absolute gap-3 bg-[#808080]/35 border-2 border-transparent transition delay-75 hover:border-white/20 rounded-3xl bottom-0 right-0">
         <Link
+        aria-label="GitHub profile"
           href="/github"
           prefetch={false}>
             <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" className="w-[28px] h-[28px] inline-block align-middle fill-slate-100 hover:fill-[#03a9f4] transition delay-75">
@@ -33,6 +34,7 @@ export default function Page() {
 
           </Link>
           <Link
+                  aria-label="Twitter profile"
           href="/twitter"
           prefetch={false}>
             <svg viewBox="0 0 24 24" aria-hidden="true" height="32" width="32" className="w-[28px] h-[28px] inline-block align-middle fill-slate-100  hover:fill-[#03a9f4] transition delay-75"><g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g></svg>
