@@ -18,7 +18,7 @@ export default function Page() {
           "Open Source Contributer.",
           "Software Performance Engineer.",
           "Operating System Engineer",
-          "React Developer."
+          "NextJS Developer."
           ]} />
       </div>
       
