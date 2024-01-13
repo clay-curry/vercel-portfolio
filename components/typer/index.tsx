@@ -26,31 +26,38 @@ function TyperSpan({ carosel }: TyperSpanProps) {
   
 
   // this is the function which display the new text from const string
-  const displayString = () => {
+  const displayString = async () => {
     const string = c[caroselIndex];
     settyperText(string.slice(0, index.current));
     index.current++;
+
     if (index.current > string.length) {
-      setTyping(false);      
-      if (strokeRef.current)
-        clearInterval(strokeRef.current);
+      (async () => {
+        setTyping(false);      
+        if (strokeRef.current)
+          clearInterval(strokeRef.current);
+      })()
     }
   };
 
-  const clearString = () => {
+  const clearString = async () => {
     const string = c[caroselIndex];
     settyperText(string.slice(0, index.current));
     index.current--;
+
     if (index.current <= 0) {
-      setCaroselIndex((caroselIndex + 1) % carosel.length);
-      setTyping(true);
-      if (strokeRef.current)
+      (async () => {
+        setCaroselIndex((caroselIndex + 1) % carosel.length);
+        setTyping(true);
+        if (strokeRef.current)
         clearInterval(strokeRef.current);
+      }
+      )()
     }
   }
   // fonction which use Math.floor and Math.random to give a random number that will be use
   //in the setInterval parameter ;) :
-  const randomSpeed = (min: number, max: number) => {
+  const randomSpeed = async (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min) + min);
   };
 
@@ -60,11 +67,15 @@ function TyperSpan({ carosel }: TyperSpanProps) {
       clearInterval(strokeRef.current);
     }
     if (isTyping) {
-      strokeRef.current = setInterval(displayString, randomSpeed(55, 60));
+      randomSpeed(55, 60).then(async (speed) => {
+        strokeRef.current = setInterval(displayString, speed)
+      });
     } else {
-      setTimeout(() => {
-      strokeRef.current = setInterval(clearString, randomSpeed(25, 30));
-      }, 1500);
+      randomSpeed(25, 30).then(async (speed) => {
+        setTimeout(async () => {
+        strokeRef.current = setInterval(clearString, speed);
+        }, 1500);
+      })
     }
     return () => {
       if (strokeRef.current)
