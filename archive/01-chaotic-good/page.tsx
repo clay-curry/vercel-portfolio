@@ -1,9 +1,9 @@
 "use client"
-import Background from "../components/background/background";
+import Background from "./background/background";
 import Link from "next/link";
-import { Typer } from "../components/typer";
+import { Typer } from "./typer";
 import { useRouter } from "next/navigation";
-import { SocialBubble } from "@/components/social-bubble";
+import { SocialBubble } from "./social-bubble";
 
 function Hero() {
   return <div className="z-10 absolute w-[65%] top-[40%] left-[50%] translate-x-[-50%] text-slate-50 align-middle items-center content-center text-center flex flex-col gap-1 tablet:gap-2">
