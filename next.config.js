@@ -6,9 +6,10 @@ module.exports = {
   },
 
 
-  async redirects() {
+   async redirects() {
+
     return [
-      // Basic redirect
+       // Basic redirect
       {
         source: '/github',
         destination: 'https://github.com/clay-curry/',
@@ -21,5 +22,5 @@ module.exports = {
         permanent: false
       },
     ]
-  },
-}
+   }
+  }

@@ -7,7 +7,6 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    
     fontSize: {
       xs: ['0.75rem', { lineHeight: '1rem' }],
       sm: ['0.875rem', { lineHeight: '1.25rem' }],
@@ -39,6 +38,15 @@ const config: Config = {
       },
       backgroundSize: {
         '200%': '200%',
+      },
+      keyframes: {
+        blink: {
+          '0%, 100%': { opacity: '0' },
+          '50%': { opacity: '1' }
+        }
+      },
+      animation: {
+        blink: 'blink 1s linear infinite',
       },
     },
   },

@@ -1,96 +1,108 @@
 "use client";
-import { clear } from "console";
-import { useState, useRef, useEffect } from "react";
-import { element } from "three/examples/jsm/nodes/Nodes.js";
+import { useEffect, useMemo } from "react";
 
-interface CursorProps {
-  carosel: string[];
-  charDelay?: number;
-  wordDelay?: number;
-  cursorText?: "|";
+const LOAD_DELAY = 1200;    // wait 1.2 seconds after dom is fully loaded
+const CHAR_DELAY = 55;      // wait 45ms before typing subsequent character
+const WORD_DELAY = 2400;    // wait 2.4 seconds before erasing the word
+const INTERVAL_DELAY = 200; // wait 200ms before typing the next word
+
+interface TyperWindow extends Window {
+  typerController?: Controller;
 }
 
-interface TyperSpanProps {
-  carosel: string[];
-}
+class Controller {
+  carousel: string[];
+  isWriting: boolean;
+  carouselIndex: number;
+  cursorPosition: number;
+  pending_step: number;
 
-function TyperSpan({ carosel }: TyperSpanProps) {
-  const [c, _] = useState(carosel);
-  const typerRef = useRef(null);
-  let [caroselIndex, setCaroselIndex] = useState(0);
-  let [typerText, settyperText] = useState("");
-  let [isTyping, setTyping] = useState(true);
+  play () { 
+    // Idea
+    // 1. each running step pushes its successor onto the JS event loop, 
+    // 2. each 'pending_step' uses block-level scoping to ensure that the previous step is always cleared before the next step is scheduled
+    // 3. subsequent steps are deferred asynchronously by 'idle_time' milliseconds, 
+    // => 
+    // (1) effect never blocks the JS event loop; 
+    // (2) detached timers are always cleared before the component unmounts
+    
+    // clear any timers that are currently running
+    if (this.pending_step !== -1)
+      clearTimeout(this.pending_step);
 
-  const index = useRef(0);
-  const strokeRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  
-
-  // this is the function which display the new text from const string
-  const displayString = async () => {
-    const string = c[caroselIndex];
-    settyperText(string.slice(0, index.current));
-    index.current++;
-
-    if (index.current > string.length) {
-      (async () => {
-        setTyping(false);      
-        if (strokeRef.current)
-          clearInterval(strokeRef.current);
-      })()
-    }
-  };
-
-  const clearString = async () => {
-    const string = c[caroselIndex];
-    settyperText(string.slice(0, index.current));
-    index.current--;
-
-    if (index.current <= 0) {
-      (async () => {
-        setCaroselIndex((caroselIndex + 1) % carosel.length);
-        setTyping(true);
-        if (strokeRef.current)
-        clearInterval(strokeRef.current);
+    let idle_time: number; 
+    const _step = async () => {
+      // current step is cleared before the next step is scheduled
+      this.pending_step = -1;
+      // type the next character or delete the last one
+      this.cursorPosition += (this.isWriting) ? 1 : -1;
+      // delay is determined by the current position of the cursor
+      idle_time = CHAR_DELAY;
+      if (this.cursorPosition > this.carousel[this.carouselIndex].length) {
+        idle_time = WORD_DELAY;
+        this.isWriting = false;
       }
-      )()
+      else if (this.cursorPosition === 0) {
+        idle_time = INTERVAL_DELAY;
+        this.isWriting = true;
+        this.carouselIndex = (this.carouselIndex + 1) % this.carousel.length;
+      }
+      // get the DOM node to type on
+      const dom_node = document.getElementById('typer') as HTMLSpanElement;
+      dom_node.innerText = this.carousel[this.carouselIndex].slice(0, this.cursorPosition);
+      // setTimeout is used to control typing speed
+      if (this.pending_step === -1) {
+        // 1. once execution is finished, each step pushes its successor onto the JS event loop,
+        // 3. subsequent steps are deferred asynchronously by 'idle_time' milliseconds, 
+        this.pending_step = setTimeout(_step, idle_time) as unknown as number; 
+      } 
+      else {
+        console.error('the previous _step was not cleared before the next _step was scheduled.');
+      }
+    }
+    // ensure DOM is loaded before starting the typing effect
+    if (window){
+      if (document.readyState === "complete")
+        this.pending_step = setTimeout(_step, LOAD_DELAY) as unknown as number 
+      else
+        window.addEventListener(
+          "DOMContentLoaded", 
+          () => { 
+            this.pending_step = setTimeout(_step, LOAD_DELAY) as unknown as number 
+          }
+        );    
+    }
+    // if the component is unmounted, THEN CLEAN UP YOUR MESS
+    return () => {
+      // 2. each 'pending_step' uses block-level scoping to ensure that the previous step is always cleared before the next step is scheduled
+      // only positive integers are valid timers
+      if (this.pending_step <= 0) return void 0;  
+      clearTimeout(this.pending_step);
+      this.pending_step = -1; 
     }
   }
-  // fonction which use Math.floor and Math.random to give a random number that will be use
-  //in the setInterval parameter ;) :
-  const randomSpeed = async (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min) + min);
-  };
 
-  // use effect is useful here to set the setInterval and rendering our function just once :
-  useEffect(() => {
-    if (strokeRef.current) {
-      clearInterval(strokeRef.current);
-    }
-    if (isTyping) {
-      randomSpeed(55, 60).then(async (speed) => {
-        strokeRef.current = setInterval(displayString, speed)
-      });
-    } else {
-      randomSpeed(25, 30).then(async (speed) => {
-        setTimeout(async () => {
-        strokeRef.current = setInterval(clearString, speed);
-        }, 1500);
-      })
-    }
-    return () => {
-      if (strokeRef.current)
-        clearInterval(strokeRef.current);
-    };
-  }, [isTyping]);
-
-  return (
-    <span>
-      <span ref={typerRef}>{typerText}</span>
-      <span className="font-extrabold text-2xl">|</span>
-    </span>
-  );
+  constructor(window: TyperWindow, carousel: string[]) {
+    this.isWriting = window?.typerController?.isWriting || true;
+    this.carouselIndex = window?.typerController?.carouselIndex || 0;
+    this.cursorPosition = window?.typerController?.cursorPosition || 0;
+    this.pending_step = window?.typerController?.pending_step || -1; // 
+    if (window) window.typerController = this;
+    this.carousel = carousel;
+  }
 }
 
-export function Typer({ carosel }: CursorProps) {
-  return <TyperSpan carosel={carosel} />;
+export function TyperSpan(this: any, { carousel }: { carousel: string[] }) {
+  // use effect is useful here to set the setInterval and rendering our function just once :
+  const controller = useMemo(
+    () => new Controller(this, carousel), [carousel]
+  );
+  const play = () => controller.play();
+  useEffect(play);
+  return (
+    <span>
+      <span id='typer' className="font-semibold"></span>
+      <span className="animate-blink font-extrabold text-2xl px-0.5">|</span>
+    </span>
+  )
 }
