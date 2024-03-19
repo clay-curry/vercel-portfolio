@@ -5,7 +5,7 @@ import './globals.css'
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@/components/analytics'
 
-const roboto = Roboto({ weight: "100", subsets: ['latin'] })
+const roboto = Roboto({ weight: ["100", "300", "400", "500", "700", "900"], subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Clayton Curry',

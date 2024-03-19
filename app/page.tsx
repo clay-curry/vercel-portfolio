@@ -10,17 +10,15 @@ export default function Page() {
 
   return <section className="h-[100%] w-[100%]">
     <div className="z-10 absolute w-[65%] top-[40%] left-[50%] translate-x-[-50%] text-slate-50 align-middle items-center content-center text-center flex flex-col gap-1 tablet:gap-2">
-      <h1 className="font-extrabold text-2xl tablet:text-2xl laptop:text-3xl">
+      <h1 className="font-black text-3xl tablet:text-4xl laptop:text-4xl">
         Clayton Curry
       </h1>
-      <div className="leading-1 font-medium text-base tablet:text-lg laptop:text-xl max-w-[450px]">
+      <div className="leading-1 font-[300] text-base tablet:text-lg laptop:text-xl max-w-[450px]">
         <TyperSpan carousel={[
           "Modular programming.",
-          "Language implementation.",
-          "Dynamic optimality.",
-          "Federated modules.",
-          "Bundler observability.",
-          "Reinforcement learning.",
+          "Toolchain observability.",
+          "Federated micro-frontends.",
+          "Human Computer Interaction."
         ]} />
       </div>
       

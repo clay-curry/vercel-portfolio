@@ -14,7 +14,8 @@ const config: Config = {
       lg: ['1.125rem', { lineHeight: '1.45rem' }],
       xl: ['1.25rem', { lineHeight: '1.6rem' }],
       '2xl': ['1.5rem', { lineHeight: '2rem' }],
-      '3xl': ['1.875rem', { lineHeight: '2.25rem' }]
+      '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+      '4xl': ['2rem', { lineHeight: '3rem' }]
     },
     screens: {
 

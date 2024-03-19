@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useMemo } from "react";
 
-const LOAD_DELAY = 1200;    // wait 1.2 seconds after dom is fully loaded
-const CHAR_DELAY = 55;      // wait 45ms before typing subsequent character
-const WORD_DELAY = 2400;    // wait 2.4 seconds before erasing the word
-const INTERVAL_DELAY = 200; // wait 200ms before typing the next word
+const LOAD_DELAY = 800;    // wait 1.2 seconds after dom is fully loaded
+const CHAR_DELAY = 30;      // wait 45ms before typing subsequent character
+const WORD_DELAY = 1200;    // wait 2.4 seconds before erasing the word
+const INTERVAL_DELAY = 100; // wait 200ms before typing the next word
+const FINAL_DELAY = 2000;   // wait 2.5 seconds after the last
 
 interface TyperWindow extends Window {
   typerController?: Controller;
@@ -46,6 +47,8 @@ class Controller {
         idle_time = INTERVAL_DELAY;
         this.isWriting = true;
         this.carouselIndex = (this.carouselIndex + 1) % this.carousel.length;
+        if (this.carouselIndex === 0) 
+          idle_time = FINAL_DELAY
       }
       // get the DOM node to type on
       const dom_node = document.getElementById('typer') as HTMLSpanElement;
@@ -100,9 +103,9 @@ export function TyperSpan(this: any, { carousel }: { carousel: string[] }) {
   const play = () => controller.play();
   useEffect(play);
   return (
-    <span>
-      <span id='typer' className="font-semibold"></span>
-      <span className="animate-blink font-extrabold text-2xl px-0.5">|</span>
+    <span className="inline-block">
+      <span className="text-extrabold align-middle" id='typer'></span>      
+      <span className="animate-blink font-extrabold text-4xl align-middle">|</span>
     </span>
   )
 }
